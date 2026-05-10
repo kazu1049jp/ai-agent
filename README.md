@@ -87,8 +87,6 @@ graph TD
 | @proposal-writer | 提案SP | 経営層向け提案書、投資判断用資料の作成。 |
 | @sec-auditor | セキュリティ監査 | 独立した立場からの「監査の監査」（第三者評価）。 |
 
-### 章3：関係性グラフ（Mermaid修正版）
-```markdown
 ## 3. 社員間の関係性グラフ (Relationship Graph)
 
 エージェント間の情報の流れと品質保証の連鎖を示します。
@@ -97,26 +95,32 @@ graph TD
 graph LR
     %% 指示・実行フロー
     SEC["@secretary"] -- "戦略指示" --> CD["@content-director"]
-    SEC -- "実行指示" --> PM["@pm"]
+    SEC["@secretary"] -- "実行指示" --> PM["@pm"]
     
     %% ブログライン
-    CD -- "構成案(骨子)" --> C_WRITER["@content-writer"]
-    C_WRITER -- "ドラフト" --> BV_AUD["@brand-voice-auditor"]
-    BV_AUD -- "是正指示" --> C_WRITER
-    BV_AUD -- "監査済原稿" --> CD
+    CD["@content-director"] -- "構成案(骨子)" --> C_WRITER["@content-writer"]
+    C_WRITER["@content-writer"] -- "ドラフト" --> BV_AUD["@brand-voice-auditor"]
+    BV_AUD["@brand-voice-auditor"] -- "是正指示" --> C_WRITER["@content-writer"]
+    BV_AUD["@brand-voice-auditor"] -- "監査済原稿" --> CD["@content-director"]
 
     %% ITライン
-    PM -- "要件パス" --> MET_D["@method-designer"]
-    MET_D -- "HLD" --> I_ARC["@infra-arch"]
-    MET_D -- "HLD" --> A_ARC["@app-arch"]
-    I_ARC -- "設計レビュー" --> I_ENG["@infra-engineer"]
-    I_ENG -- "構築ログ" --> T_WRITER["@technical-writer"]
-    T_WRITER -- "環境設計書" --> I_ARC
+    PM["@pm"] -- "要件パス" --> MET_D["@method-designer"]
+    MET_D["@method-designer"] -- "HLD" --> I_ARC["@infra-arch"]
+    MET_D["@method-designer"] -- "HLD" --> A_ARC["@app-arch"]
+    I_ARC["@infra-arch"] -- "設計レビュー" --> I_ENG["@infra-engineer"]
+    I_ENG["@infra-engineer"] -- "構築ログ" --> T_WRITER["@technical-writer"]
+    T_WRITER["@technical-writer"] -- "環境設計書" --> I_ARC["@infra-arch"]
 
-    %% 横断リサーチ
-    I_ARC & A_ARC & C_WRITER -- "調査依頼" --> RES_IT["@it-researcher"]
-    SYS_D["@system-designer"] & CD -- "調査依頼" --> RES_UX["@ux-researcher"]
-    SEC_AUD["@sec-auditor"] -- "第三者監査" --> I_ARC & A_ARC
+    %% 横断リサーチ (結合を個別に定義)
+    I_ARC["@infra-arch"] -- "調査依頼" --> RES_IT["@it-researcher"]
+    A_ARC["@app-arch"] -- "調査依頼" --> RES_IT["@it-researcher"]
+    C_WRITER["@content-writer"] -- "調査依頼" --> RES_IT["@it-researcher"]
+    
+    SYS_D["@system-designer"] -- "調査依頼" --> RES_UX["@ux-researcher"]
+    CD["@content-director"] -- "調査依頼" --> RES_UX["@ux-researcher"]
+    
+    SEC_AUD["@sec-auditor"] -- "第三者監査" --> I_ARC["@infra-arch"]
+    SEC_AUD["@sec-auditor"] -- "第三者監査" --> A_ARC["@app-arch"]
 ```
 
 ### 章4：運用ガイドラインとフッター
