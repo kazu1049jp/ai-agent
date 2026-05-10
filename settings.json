@@ -1,0 +1,16 @@
+{
+  "agents": {
+    "enabled": true,
+    "allowInvocationsFromSubagents": true,
+    "maxNestingDepth": 3
+  },
+  "tools": {
+    "coreTools": ["*"],
+    "mcpServers": {
+      "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"]
+      }
+    }
+  }
+}
