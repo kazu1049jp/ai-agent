@@ -1,57 +1,57 @@
 # 統合型AIエンタープライズ：組織設計図 (IT Infrastructure & Blog Media)
 
-このリポジトリは、**「ITインフラアーキテクチャ事業」**と**「ブログメディア事業」**の2つのエンジンを、18名の専門AIエージェント（サブエージェント）が自律的に連携して運営するための組織マニュアルです。
+このリポジトリは、「ITインフラアーキテクチャ事業」と「ブログメディア事業」の2つのエンジンを、18名の専門AIエージェント（サブエージェント）が自律的に連携して運営するための組織マニュアルです。
 
 ## 1. 組織構造：マルチビジネス・マトリクス
 
 CEOのビジョンを、社長秘書が2つのドメインへ最適にデリゲート（委譲）し、共通のリサーチ・監査基盤が全体を支える「マトリクス型組織」を採用しています。
 
+### 組織図 (Mermaid)
 ```mermaid
 graph TD
-    CEO[CEO: ITインフラアーキテクト] --> SEC[@secretary]
+    CEO["CEO: ITインフラアーキテクト"] --> SEC["@secretary"]
 
     %% 経営・管理
     subgraph "経営統括レイヤー"
-        SEC --> PM[@pm]
-        SEC --> SYS_D[@system-designer]
-        SEC --> ORG_D[@org-designer]
+        SEC --> PM["@pm"]
+        SEC --> SYS_D["@system-designer"]
+        SEC --> ORG_D["@org-designer"]
     end
 
     %% ITインフラ事業
     subgraph "ITインフラ事業ドメイン"
-        PM --> MET_D[@method-designer]
-        MET_D --> I_ARC[@infra-arch]
-        MET_D --> A_ARC[@app-arch]
-        I_ARC --> I_ENG[@infra-engineer]
-        A_ARC --> BE_ENG[@backend-engineer]
-        A_ARC --> FE_ENG[@frontend-engineer]
-        I_ARC --> I_TST[@infra-tester]
-        A_ARC --> A_TST[@app-tester]
-        MET_D --> T_WRITER[@technical-writer]
+        PM --> MET_D["@method-designer"]
+        MET_D --> I_ARC["@infra-arch"]
+        MET_D --> A_ARC["@app-arch"]
+        I_ARC --> I_ENG["@infra-engineer"]
+        A_ARC --> BE_ENG["@backend-engineer"]
+        A_ARC --> FE_ENG["@frontend-engineer"]
+        I_ARC --> I_TST["@infra-tester"]
+        A_ARC --> A_TST["@app-tester"]
+        MET_D --> T_WRITER["@technical-writer"]
     end
 
     %% ブログ事業
     subgraph "ブログ・メディア事業ドメイン"
-        SEC --> CD[@content-director]
-        CD --> C_WRITER[@content-writer]
-        C_WRITER --> BV_AUD[@brand-voice-auditor]
+        SEC --> CD["@content-director"]
+        CD --> C_WRITER["@content-writer"]
+        C_WRITER --> BV_AUD["@brand-voice-auditor"]
     end
 
     %% 共通専門リソース
     subgraph "共通リサーチ・監査・提案基盤"
-        SEC --> RES_IT[@it-researcher]
-        SEC --> RES_UX[@ux-researcher]
-        SEC --> PROP_W[@proposal-writer]
-        SEC --> SEC_AUD[@infra/app-sec-auditor]
+        SEC --> RES_IT["@it-researcher"]
+        SEC --> RES_UX["@ux-researcher"]
+        SEC --> PROP_W["@proposal-writer"]
+        SEC --> SEC_AUD["@infra/app-sec-auditor"]
     end
 
     %% 相互連携
     I_ARC -. 調査依頼 .-> RES_IT
     CD -. 市場調査 .-> RES_UX
     T_WRITER -. 構築情報参照 .-> I_ENG
+```
 
-### 章2：社員構成と役割概要
-```markdown
 ## 2. 社員構成と役割概要
 
 ### 2.1 経営・戦略レイヤー (Model: Pro)
@@ -87,6 +87,8 @@ graph TD
 | @proposal-writer | 提案SP | 経営層向け提案書、投資判断用資料の作成。 |
 | @sec-auditor | セキュリティ監査 | 独立した立場からの「監査の監査」（第三者評価）。 |
 
+### 章3：関係性グラフ（Mermaid修正版）
+```markdown
 ## 3. 社員間の関係性グラフ (Relationship Graph)
 
 エージェント間の情報の流れと品質保証の連鎖を示します。
@@ -94,29 +96,30 @@ graph TD
 ```mermaid
 graph LR
     %% 指示・実行フロー
-    SEC -- "戦略指示" --> CD
-    SEC -- "実行指示" --> PM
+    SEC["@secretary"] -- "戦略指示" --> CD["@content-director"]
+    SEC -- "実行指示" --> PM["@pm"]
     
     %% ブログライン
-    CD -- "構成案(骨子)" --> C_WRITER
-    C_WRITER -- "ドラフト" --> BV_AUD
+    CD -- "構成案(骨子)" --> C_WRITER["@content-writer"]
+    C_WRITER -- "ドラフト" --> BV_AUD["@brand-voice-auditor"]
     BV_AUD -- "是正指示" --> C_WRITER
     BV_AUD -- "監査済原稿" --> CD
 
     %% ITライン
-    PM -- "要件パス" --> MET_D
-    MET_D -- "HLD" --> I_ARC & A_ARC
-    I_ARC -- "設計レビュー" --> I_ENG
-    I_ENG -- "構築ログ" --> T_WRITER
+    PM -- "要件パス" --> MET_D["@method-designer"]
+    MET_D -- "HLD" --> I_ARC["@infra-arch"]
+    MET_D -- "HLD" --> A_ARC["@app-arch"]
+    I_ARC -- "設計レビュー" --> I_ENG["@infra-engineer"]
+    I_ENG -- "構築ログ" --> T_WRITER["@technical-writer"]
     T_WRITER -- "環境設計書" --> I_ARC
 
     %% 横断リサーチ
-    I_ARC & A_ARC & C_WRITER -- "調査依頼" --> RES_IT
-    SYS_D & CD -- "調査依頼" --> RES_UX
-    SEC_AUD -- "第三者監査" --> I_ARC & A_ARC
+    I_ARC & A_ARC & C_WRITER -- "調査依頼" --> RES_IT["@it-researcher"]
+    SYS_D["@system-designer"] & CD -- "調査依頼" --> RES_UX["@ux-researcher"]
+    SEC_AUD["@sec-auditor"] -- "第三者監査" --> I_ARC & A_ARC
+```
 
 ### 章4：運用ガイドラインとフッター
-```markdown
 ## 4. 運用ガイドライン
 
 1. 自律性の維持: 各社員は自らの「ガイドライン」を拠り所に判断します。CEOは結果の承認（Approve）と、ガイドラインの調整に注力してください。
