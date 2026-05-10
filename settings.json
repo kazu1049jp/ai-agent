@@ -12,5 +12,8 @@
         "args": ["-y", "@modelcontextprotocol/server-github"]
       }
     }
+  },
+  "experimental": {
+    "enableAgents": true
   }
 }
